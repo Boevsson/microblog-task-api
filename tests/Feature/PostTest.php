@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\UploadedFile;
@@ -120,5 +121,7 @@ class PostTest extends TestCase
 
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertSame(null, $responseData);
+
+        $this->assertSame(null, Post::find(1));
     }
 }
