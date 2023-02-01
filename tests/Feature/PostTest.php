@@ -74,6 +74,7 @@ class PostTest extends TestCase
         $response = $this->makeRequest('POST', '/posts', [
         ]);
 
+        $this->assertEquals(422, $response->getStatusCode());
         $responseData = json_decode((string)$response->getBody(), true);
 
         $this->assertSame([
