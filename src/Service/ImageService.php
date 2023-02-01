@@ -6,7 +6,7 @@ class ImageService extends Service
 {
     public function saveUploadedFile()
     {
-        $uploadDirectory = $this->container->get('upload_directory');
+        $uploadDirectory = $this->container->get('uploadDirectory');
 
         $storage = new \Upload\Storage\FileSystem($uploadDirectory);
         $file = new \Upload\File('file', $storage);

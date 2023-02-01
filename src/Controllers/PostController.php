@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function getAll(Request $request, Response $response, array $args)
     {
-        $posts = Post::all();
+        $posts = $this->container->get(Post::class)::all();
 
         return $response->withJson($posts);
     }
@@ -34,7 +34,7 @@ class PostController extends Controller
 
         if (!$validator->isValid()) {
 
-            return $response->withJson($validator->getErrors());
+            return $response->withJson($validator->getErrors(), 422);
         }
 
         $data = $request->getParsedBody();
@@ -53,14 +53,14 @@ class PostController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $validator = $this->container->get('validator')->validate($request, [
+        $validator = $this->validator->validate($request, [
             'title' => Validator::length(3, 100)->notBlank(),
             'content' => Validator::notBlank()
         ]);
 
         if (!$validator->isValid()) {
 
-            return $response->withJson($validator->getErrors());
+            return $response->withJson($validator->getErrors(), 422);
         }
 
         $post = Post::findOrFail($args['id']);
