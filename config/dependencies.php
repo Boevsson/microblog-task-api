@@ -26,7 +26,7 @@ return function (App $app) {
         return new \App\Models\Post();
     };
 
-    $container['uploadDirectory'] = __DIR__ . '/../uploads';
+    $container['uploadDirectory'] = __DIR__ . '/../src/public/uploads';
 
 // Setup Eloquent database manager
     $capsule = new Manager;

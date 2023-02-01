@@ -9,6 +9,11 @@ use Slim\Http\Response;
 
 class AuthController extends Controller
 {
+    public function me(Request $request, Response $response)
+    {
+        return $request->getAttribute('current_user');
+    }
+
     public function login(Request $request, Response $response)
     {
         $validator = $this->validator->validate($request, [

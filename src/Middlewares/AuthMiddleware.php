@@ -15,9 +15,13 @@ class AuthMiddleware
 
             $token = explode(' ', $header[0])[1];
 
-            if (!User::where('token', $token)->first()){
+            $user = User::where('token', $token)->first();
+
+            if (!$user){
                 return $response->withStatus(401);
             }
+
+            $request = $request->withAttribute('current_user', $user);
         }
 
         return $next($request, $response);

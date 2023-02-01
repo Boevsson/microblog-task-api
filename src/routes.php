@@ -18,4 +18,6 @@ return function (App $app) {
 
     $app->post('/users', \App\Controllers\UserController::class . ':create');
     $app->post('/login', \App\Controllers\AuthController::class . ':login');
+    $app->get('/me', \App\Controllers\AuthController::class . ':me')
+        ->add($authMiddleware);
 };
