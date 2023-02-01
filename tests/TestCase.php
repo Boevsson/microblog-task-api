@@ -59,7 +59,7 @@ class TestCase extends BaseTestCase
         return $this->app;
     }
 
-    public function makeRequest($requestMethod, $requestUri, $requestData = null)
+    public function makeRequest($requestMethod, $requestUri, $requestData = null, $files = null)
     {
         // Create a mock environment for testing with
         $environment = Environment::mock(
@@ -71,6 +71,11 @@ class TestCase extends BaseTestCase
 
         // Set up a request object based on the environment
         $request = Request::createFromEnvironment($environment);
+
+        if ($files){
+
+            $request = $request->withUploadedFiles($files);
+        }
 
         // Add request data, if it exists
         if (isset($requestData)) {

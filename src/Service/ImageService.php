@@ -2,25 +2,23 @@
 
 namespace App\Service;
 
+use Slim\Http\UploadedFile;
+
 class ImageService extends Service
 {
-    public function saveUploadedFile()
+    public function saveUploadedFile(UploadedFile $uploadedFile)
     {
         $uploadDirectory = $this->container->get('uploadDirectory');
 
-        $storage = new \Upload\Storage\FileSystem($uploadDirectory);
-        $file = new \Upload\File('file', $storage);
+        return $this->moveUploadedFile($uploadDirectory, $uploadedFile);
+    }
 
-        $file->addValidations(array(
-            // Ensure file is of type "image/png"
-            new \Upload\Validation\Mimetype(['image/png', 'image/jpg', 'image/jpeg', 'image/gif']),
-            new \Upload\Validation\Size('5M')
-        ));
-
-        $basename = bin2hex(random_bytes(8));
-        $filename = sprintf('%s.%0.8s', $basename, $file->getExtension());
-
-        $file->upload($filename);
+    private function moveUploadedFile($directory, UploadedFile $uploadedFile)
+    {
+        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+        $filename = sprintf('%s.%0.8s', $basename, $extension);
+        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
         return $filename;
     }

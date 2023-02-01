@@ -28,8 +28,7 @@ class PostController extends Controller
     {
         $validator = $this->container->get('validator')->validate($request, [
             'title' => Validator::length(3, 100)->notBlank(),
-            'content' => Validator::notBlank(),
-            'file' => Validator::notBlank()
+            'content' => Validator::notBlank()
         ]);
 
         if (!$validator->isValid()) {
@@ -37,10 +36,23 @@ class PostController extends Controller
             return $response->withJson($validator->getErrors(), 422);
         }
 
+        if (!$request->getUploadedFiles()) {
+
+            return $response->withJson(['file' => 'File is required.'], 422);
+        }
+
+        $uploadedFile = $request->getUploadedFiles()['file'];
+        $fileInfo = getimagesize($uploadedFile->file);
+
+        if ($fileInfo['mime'] != 'image/jpeg' && $fileInfo['mime'] != 'image/png') {
+
+            return $response->withJson(['error' => 'Invalid image format'], 422);
+        }
+
         $data = $request->getParsedBody();
 
         $imageService = $this->container->get(ImageService::class);
-        $filename = $imageService->saveUploadedFile();
+        $filename = $imageService->saveUploadedFile($uploadedFile);
 
         $post = Post::create([
             'title' => $data['title'],

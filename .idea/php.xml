@@ -58,7 +58,6 @@
       <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
       <path value="$PROJECT_DIR$/vendor/respect/validation" />
       <path value="$PROJECT_DIR$/vendor/awurth/slim-validation" />
-      <path value="$PROJECT_DIR$/vendor/codeguy/upload" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/dyorg/slim-token-authentication" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />

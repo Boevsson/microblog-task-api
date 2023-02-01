@@ -84,11 +84,47 @@ class PostTest extends TestCase
             ],
             'content' => [
                 'notBlank' => 'null must not be blank'
-            ],
-            'file' => [
-                'notBlank' => 'null must not be blank'
-            ],
+            ]
         ], $responseData);
+    }
+
+    public function testCreatePost()
+    {
+        $local_file = dirname(__DIR__) . '/fixtures/avatar.png';
+        $temp_file = tempnam(sys_get_temp_dir(), 'prefix');
+
+        if (!copy($local_file, $temp_file)) {
+            // Return an error
+            return "Failed to create temporary file.";
+        }
+
+        $file       = new UploadedFile(
+            $temp_file,
+            'avatar.png',
+            'image/png',
+            49518
+        );
+        $files      = ['file' => $file];
+
+        $response = $this->makeRequest('POST', '/posts', [
+            'title' => 'Test post',
+            'content' => 'Content test'
+        ], $files);
+
+        $responseData = json_decode((string)$response->getBody(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $this->assertArrayHasKey('id', $responseData);
+        $this->assertArrayHasKey('title', $responseData);
+        $this->assertArrayHasKey('content', $responseData);
+        $this->assertArrayHasKey('image_file_name', $responseData);
+        $this->assertArrayHasKey('created_at', $responseData);
+        $this->assertArrayHasKey('updated_at', $responseData);
+
+        $this->assertSame(3, $responseData['id']);
+        $this->assertSame('Test post', $responseData['title']);
+        $this->assertSame('Content test', $responseData['content']);
     }
 
     public function testUpdatePost()

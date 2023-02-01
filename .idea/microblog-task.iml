@@ -52,7 +52,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/respect/validation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/awurth/slim-validation" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/codeguy/upload" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dyorg/slim-token-authentication" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mockery/mockery" />
