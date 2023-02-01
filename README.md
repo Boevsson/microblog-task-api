@@ -10,9 +10,11 @@
 
 4. Run tests using php vendor/bin/phpunit
 
-5. You can see all the avalable routes in src/routes.php
+5. Run the project using php -S localhost:8080
 
-6. You can login with:
+6. You can see all the avalable routes in src/routes.php
+
+7. You can login with:
 {
     "email": "test@email.com",
     "password": "rocknroll"
